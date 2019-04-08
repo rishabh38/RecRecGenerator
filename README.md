@@ -5,4 +5,7 @@ tool to generate recursive rectangle pattern
 - [python 3.6+](https://www.python.org/downloads/)
 - [pillow 5.3+](https://pillow.readthedocs.io/en/stable/installation.html)
 
-###usage
+### usage
+```
+$ python3 genPattern.py 
+```
