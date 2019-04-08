@@ -13,4 +13,8 @@ something like this:
 ```
 $ python3 genPattern.py 
 ```
- 
+
+configuration I used to generate my profile picture:
+```
+$ genPattern.py -bg '#101010' -lw 7 -pc red blue pink cyan yellow brown -c 14 -nb 27
+``` 
