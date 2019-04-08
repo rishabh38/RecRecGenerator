@@ -1,5 +1,5 @@
 # RecRecGenerator
-tool to generate recursive rectangle pattern
+tool to generate 'recursive rectangles' pattern
 
 ### Dependencies
 - [python 3.6+](https://www.python.org/downloads/)
