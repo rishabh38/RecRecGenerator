@@ -3,15 +3,30 @@
 from PIL import Image, ImageDraw
 import argparse
 
-def draw_pattern(im, beg_width, beg_height, start_coordinate, change,
-                 number_of_blocks, color_sequence, line_width):
+def base(im, four_coor, change, width, color):
     draw_im = ImageDraw.Draw(im)
+    points = [four_coor[1], 
+              (four_coor[1][0], four_coor[3][1] + change), 
+              (four_coor[0][0] + change, four_coor[3][1] + change),
+              (four_coor[0][0] + change, four_coor[2][1]),
+              four_coor[2]]
+    draw_im.line(points, color, width, 'curve')
+    return im
+
+def draw_pattern(im, beg_width, beg_height, start_coordinate, change,
+                 number_of_blocks, colors, line_width):
+    draw_im = ImageDraw.Draw(im)
+    #set initial btrl values
     bottom = start_coordinate[1]
     top = bottom - beg_height
     right = start_coordinate[0]
     left = right - beg_width
+    #set up for color sequence traversal
     color_i = 0
-    total_colors = len(color_sequence)
+    total_colors = len(colors)
+
+    four_coor = [(left, bottom),
+                 start_coordinate]
 
     for i in range(number_of_blocks):
         points = []
@@ -24,10 +39,12 @@ def draw_pattern(im, beg_width, beg_height, start_coordinate, change,
         points.append((right, top))
         top += change
         points.append((right, bottom))
-        draw_im.line(points, color_sequence[color_i], line_width, 'curve')
+        draw_im.line(points, colors[color_i], line_width, 'curve')
         color_i = (color_i + 1) % total_colors
 
-    return im
+    four_coor += [(right, bottom),
+                  (right, top - change)]
+    return base(im, four_coor, change, line_width, colors[0])
 
 def main():
     default_xd = 900
