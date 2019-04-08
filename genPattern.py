@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw
 import argparse
 
 def draw_pattern(im, beg_width, beg_height, start_coordinate, change,
-                 number_of_blocks, color_sequence):
+                 number_of_blocks, color_sequence, line_width):
     draw_im = ImageDraw.Draw(im)
     bottom = start_coordinate[1]
     top = bottom - beg_height
@@ -24,7 +24,7 @@ def draw_pattern(im, beg_width, beg_height, start_coordinate, change,
         points.append((right, top))
         top += change
         points.append((right, bottom))
-        draw_im.line(points, color_sequence[color_i], 4, 'curve')
+        draw_im.line(points, color_sequence[color_i], line_width, 'curve')
         color_i = (color_i + 1) % total_colors
 
     return im
@@ -33,18 +33,21 @@ def main():
     default_xd = 900
     default_yd = 800
     default_totBlocks = 38
+    default_line_width = 4
     default_change = 10
     default_midW = 30
     default_midH = default_yd - 2*default_change
     parser = argparse.ArgumentParser()
     parser.add_argument('-bg', '--bgcolor', default='black',
                         help='select the background color of the image')
-    parser.add_argument('-pc', '--pattern_color', default='cyan',
-                        help='set the color of the pattern')
     parser.add_argument('-xd', '--xdimension', type=int, default=default_xd,
                         help='set the x dimenstion of the image')
     parser.add_argument('-yd', '--ydimension', type=int, default=default_yd,
                         help='set y dimension of the image')
+    parser.add_argument('-pc', '--pattern_color', default=['cyan'], nargs='*',
+                        help='set the color of the pattern')
+    parser.add_argument('-lw', '--line_width', default = default_line_width,
+                        type=int, help='set the width of the pattern line')
     parser.add_argument('-nb', '--total_blocks', type=int, default=default_totBlocks,
                         help='set total no. of blocks to generate')
     parser.add_argument('-c', '--change', type=int, default=default_change,
@@ -61,7 +64,7 @@ def main():
     image = draw_pattern(image, args.middle_width, args.ydimension - 2*args.change,
                          (args.xdimension/2 + args.middle_width/2, 
                           args.ydimension - args.change),
-                         args.change, args.total_blocks, [args.pattern_color])
+                         args.change, args.total_blocks, args.pattern_color, args.line_width)
     image.save(args.outfile + '.png')
 
 if __name__ == '__main__':
