@@ -2,10 +2,6 @@
 tool to generate 'recursive rectangles' pattern,
 
 something like this:
-![pattern](https://github.com/rishabh38/RecRecGenerator/blob/master/imgs/sample.png=250x)
-
-
-
 <img src="https://raw.githubusercontent.com/rishabh38/RecRecGenerator/master/imgs/sample.png" width="300"/>
 
 
